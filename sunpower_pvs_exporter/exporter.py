@@ -366,11 +366,11 @@ class SunPowerPVSupervisorCollector(object):
 
         grid_profile = self.grid_profile
         value = None
-        if grid_profile:
-            value = dict(id=grid_profile["active_id"],
-                         name=grid_profile["active_name"],
-                         percent=str(grid_profile["percent"]),
-                         status=grid_profile["status"],
+        if grid_profile.get('result', None) == "succeed":
+            value = dict(id=grid_profile.get("active_id", ""),
+                         name=grid_profile.get("active_name", ""),
+                         percent=str(grid_profile.get("percent", "")),
+                         status=grid_profile.get("status", "")
                         )
         grid_info = InfoMetricFamily(
             name="sunpower_pvs_grid_profile",
